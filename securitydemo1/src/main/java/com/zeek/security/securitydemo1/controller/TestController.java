@@ -24,7 +24,7 @@ public class TestController {
         return "hello index";
     }
 
-    // 测试注解：
+    // 测试注解：通过在方法上使用SS的注解来控制特定方法的访问权限
     @RequestMapping("/update")
     @ResponseBody
     @Secured({"ROLE_sale", "ROLE_manager"})
@@ -32,6 +32,7 @@ public class TestController {
         return "hello update";
     }
 
+    // 测试注解：通过在方法上使用SS的注解来控制特定方法的访问权限
     @RequestMapping("/preAuthorize")
     @ResponseBody
     @PreAuthorize("hasAnyAuthority('admins')")
