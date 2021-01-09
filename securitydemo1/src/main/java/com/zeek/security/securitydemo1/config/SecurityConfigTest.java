@@ -29,6 +29,8 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.exceptionHandling().accessDeniedPage("/unauth.html");
+
         http.formLogin() // 自定义登录页面
             .loginPage("/login.html") // 登录页面设置
             .loginProcessingUrl("/user/login") // 登录访问路径
