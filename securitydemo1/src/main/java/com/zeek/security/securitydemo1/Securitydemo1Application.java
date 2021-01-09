@@ -1,9 +1,11 @@
 package com.zeek.security.securitydemo1;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan("com.zeek.security.securitydemo1.mapper")
 public class Securitydemo1Application {
 
     public static void main(String[] args) {
