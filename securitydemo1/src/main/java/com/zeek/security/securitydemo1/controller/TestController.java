@@ -16,4 +16,11 @@ public class TestController {
         return "hello security";
     }
 
+    @RequestMapping("/index")
+    public String index() {
+        return "hello index";
+    }
+
+
+
 }

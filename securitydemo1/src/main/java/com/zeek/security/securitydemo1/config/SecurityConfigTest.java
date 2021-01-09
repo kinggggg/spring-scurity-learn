@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,30 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin() // 自定义登录页面
+            .loginPage("/login.html") // 登录页面设置
+            .loginProcessingUrl("/user/login") // 登录访问路径
+            .defaultSuccessUrl("/test/index").permitAll()   // 登录成功后跳转路径
+                /**
+                 * 以下的内容来自'Spring Security实战'一书中
+                 * HttpSecurity提供了很多配置相关的方法，分别对应命名空间配置中的子标签<http>。
+                 * 例如， authorizeRequests（）、formLogin（）、httpBasic（）和 csrf（）
+                 * 分别对应<intercept-url>、<formlogin>、<http-basic>和<csrf>标签。
+                 * 调用这些方法之后，除非使用and（）方法结束当前标签，上下文 才会回到HttpSecurity，否则链式调用的上下文将自动进入对应标签域。
+                 *
+                 * authorizeRequests（）方法实际上返回了一个 URL 拦截注册器，
+                 * 我们可以调用它提供的 anyanyRequest（）、antMatchers（）和regexMatchers（）等方法来匹配系统的URL，并为其指定安全 策略。
+                 */
+            .and().authorizeRequests().antMatchers("/", "/test/hello", "/user/login").permitAll() // 设置哪些路径可以直接访问, 不需要认证
+                  .anyRequest().authenticated()
+            .and().csrf().disable(); // 关闭csrf防护
+
+
+
     }
 
     @Bean
