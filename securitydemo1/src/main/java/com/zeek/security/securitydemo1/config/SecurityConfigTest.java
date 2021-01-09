@@ -29,6 +29,7 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 指定授权失败后404跳转页面
         http.exceptionHandling().accessDeniedPage("/unauth.html");
 
         http.formLogin() // 自定义登录页面
