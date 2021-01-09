@@ -43,10 +43,17 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
                  * authorizeRequests（）方法实际上返回了一个 URL 拦截注册器，
                  * 我们可以调用它提供的 anyanyRequest（）、antMatchers（）和regexMatchers（）等方法来匹配系统的URL，并为其指定安全 策略。
                  */
-                // 可以这么理解: 1. 需要认证authorizeRequests的请求有/, /test/hello, /user/login, 对于其他的请求全部放行permitAll
-            .and().authorizeRequests().antMatchers("/", "/test/hello", "/user/login").permitAll() // 设置哪些路径可以直接访问, 不需要认证
-                // 2. 对于任何的请求需求进行认证.
-                  .anyRequest().authenticated()
+            .and()
+                //
+                .authorizeRequests()
+                    // 可以这么理解: 1. 需要认证authorizeRequests的请求有/, /test/hello, /user/login, 对于其他的请求全部放行permitAll
+                    .antMatchers("/", "/test/hello", "/user/login").permitAll() // 设置哪些路径可以直接访问, 不需要认证
+                    // 当前登录用户, 只有具备admins权限此可以访问这个路径
+//                    .antMatchers("/test/index").hasAuthority("admins,manager")
+                    // 具备权限中的一个即可
+                    .antMatchers("/test/index").hasAnyAuthority("admins,manager")
+                    // 2. 对于任何的请求需求进行认证.
+                    .anyRequest().authenticated()
             .and().csrf().disable(); // 关闭csrf防护
 
 
