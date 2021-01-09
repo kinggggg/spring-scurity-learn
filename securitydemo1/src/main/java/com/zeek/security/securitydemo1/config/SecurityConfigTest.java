@@ -52,6 +52,7 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
 //                    .antMatchers("/test/index").hasAuthority("admins,manager")
                     // 具备权限中的一个即可
                     .antMatchers("/test/index").hasAnyAuthority("admins,manager")
+                    .antMatchers("/test/index").hasRole("sale")
                     // 2. 对于任何的请求需求进行认证.
                     .anyRequest().authenticated()
             .and().csrf().disable(); // 关闭csrf防护
