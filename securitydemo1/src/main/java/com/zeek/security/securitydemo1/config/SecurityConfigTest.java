@@ -29,13 +29,16 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 退出
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/test/hello").permitAll();
+
         // 指定授权失败后404跳转页面
         http.exceptionHandling().accessDeniedPage("/unauth.html");
 
         http.formLogin() // 自定义登录页面
             .loginPage("/login.html") // 登录页面设置
             .loginProcessingUrl("/user/login") // 登录访问路径
-            .defaultSuccessUrl("/test/index").permitAll()   // 登录成功后跳转路径
+            .defaultSuccessUrl("/success.html").permitAll()   // 登录成功后跳转路径
                 /**
                  * 以下的内容来自'Spring Security实战'一书中
                  * HttpSecurity提供了很多配置相关的方法，分别对应命名空间配置中的子标签<http>。
