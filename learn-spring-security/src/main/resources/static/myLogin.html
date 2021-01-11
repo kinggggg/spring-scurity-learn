@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>login page</title>
+</head>
+<body>
+<!--默认的情况如果没有设置 loginProcessingUrl 设置值的话，默认就使用 loginPage 作为 loginProcessingUrl
+    因此这种情况下：
+
+    当我们配置了 loginPage 为 /myLogin.html 之后，这个配置从字面上理解，就是设置登录页面的地址为 /login.html。
+
+    实际上它还有一个隐藏的操作，就是登录接口地址也设置成 /myLogin.html 了。换句话说，新的登录页面和登录接口地址都是 /myLogin.html，现在存在如下两个请求：
+
+    GET http://localhost:8080/myLogin.html
+    POST http://localhost:8080/myLogin.html
+
+    前面的 GET 请求用来获取登录页面，后面的 POST 请求用来提交登录数据。
+
+    参考：https://blog.csdn.net/u012702547/article/details/105202015
+
+    -->
+<form method="post" action="/login">
+    <p>username: <input type="text" name="username" size="10"></p>
+    <p>password: <input type="password" name="password" size="10"></p>
+    <p><input type="submit" value="submit">
+        <input type="reset" value="cancel"></p>
+</form>
+</body>
