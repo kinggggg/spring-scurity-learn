@@ -3,6 +3,8 @@ package com.itheima.security.springboot.service;
 import com.itheima.security.springboot.dao.UserDao;
 import com.itheima.security.springboot.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,8 +40,8 @@ public class SpringDataUserDetailsService implements UserDetailsService {
 //        String[] permissionArray = new String[permissions.size()];
 //        permissions.toArray(permissionArray);
 //        UserDetails userDetails = User.withUsername(userDto.getUsername()).password(userDto.getPassword()).authorities(permissionArray).build();
-
-        UserDetails userDetails = User.withUsername("zhangsan").password("123").build();
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("admin");
+        UserDetails userDetails = User.withUsername("zhangsan").password("123").authorities(grantedAuthority).build();
         return userDetails;
     }
 }
