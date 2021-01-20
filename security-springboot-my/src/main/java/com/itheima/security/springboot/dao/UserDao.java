@@ -14,7 +14,7 @@ import java.util.List;
  * @author Administrator
  * @version 1.0
  **/
-@Repository
+//@Repository
 public class UserDao {
 
     @Autowired
