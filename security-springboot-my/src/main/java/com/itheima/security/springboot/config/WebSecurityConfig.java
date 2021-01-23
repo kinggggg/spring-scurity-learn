@@ -18,6 +18,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  * @version 1.0
  **/
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //定义用户信息服务（查询用户信息）
@@ -45,8 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/r/r1").hasAuthority("p1")
-                .antMatchers("/r/r2").hasAuthority("p2")
+//                .antMatchers("/r/r1").hasAuthority("p1")
+//                .antMatchers("/r/r2").hasAuthority("p2")
                 .antMatchers("/r/**").authenticated()//所有/r/**的请求必须认证通过
                 // 顺序不能颠倒!! Spring Security是按照配置的权限认证从上到下执行的! 因此需要把范围更大的放到最下边
                 .anyRequest().permitAll()//除了/r/**，其它的请求可以访问
