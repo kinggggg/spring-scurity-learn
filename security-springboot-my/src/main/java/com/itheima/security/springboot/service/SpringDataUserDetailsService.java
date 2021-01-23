@@ -17,7 +17,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         System.out.println("username:" + username);
-        UserDetails userDetails = User.withUsername("zhangsan").password("123").authorities("p1").build();
+        UserDetails userDetails = User.withUsername("zhangsan").password("$2a$10$RrYkowHQJGfnK.WBVwiqGemON9rV9JOuf.YK/7TxocnVcXrMqqjEG").authorities("p1").build();
         return userDetails;
     }
 }
