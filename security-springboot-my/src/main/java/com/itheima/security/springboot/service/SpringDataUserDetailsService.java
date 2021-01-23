@@ -1,10 +1,14 @@
 package com.itheima.security.springboot.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.itheima.security.springboot.dao.UserDao;
+import com.itheima.security.springboot.model.UserDto;
 
 /**
  * @author liweibo03 <liweibo03@kuaishou.com>
@@ -13,11 +17,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpringDataUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    UserDao userDao;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         System.out.println("username:" + username);
-        UserDetails userDetails = User.withUsername("zhangsan").password("$2a$10$RrYkowHQJGfnK.WBVwiqGemON9rV9JOuf.YK/7TxocnVcXrMqqjEG").authorities("p1").build();
+
+        UserDto userDto = userDao.getUserByUsername(username);
+        if (userDto == null) {
+            // 返回null即可! 因为Spring Security会根据null做处理
+            return null;
+        }
+        UserDetails userDetails = User.withUsername(userDto.getUsername())
+                .password(userDto.getPassword()).authorities("p1").build();
+
         return userDetails;
     }
 }
