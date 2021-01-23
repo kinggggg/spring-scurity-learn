@@ -56,7 +56,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successForwardUrl("/login-success")//自定义登录成功的页面地址
                 .and()
                 .logout()
-                .logoutUrl("/logout");
+                .logoutUrl("/logout")
+                .and()
+                // 当设置为 STATELESS 即, 在任何情况下Spring Security都不会创建Session, 这就意味着就算登录成功后,
+                // 并且当前登录成功的用户具备权限 p1 的话, 此时若访问/r/r1也会跳转到登录页!
+                // 因为在服务器端此时没有与cookie对应的Session信息, Spring Security此时也就无法获取之前登录成功的用户信息
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // 默认值为 IF_REQUIRED 即, 如果需要就创建一个Session（默认）登录时
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 
 
     }
