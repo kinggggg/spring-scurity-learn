@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
+                .logoutSuccessUrl("/login-view")
                 .and()
                 // 当设置为 STATELESS 即, 在任何情况下Spring Security都不会创建Session, 这就意味着就算登录成功后,
                 // 并且当前登录成功的用户具备权限 p1 的话, 此时若访问/r/r1也会跳转到登录页!
